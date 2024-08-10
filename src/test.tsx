@@ -16,6 +16,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
         counter: number;
     }
 
+
     async function incrementCounter() {
         try {
             const restOperation = get({
@@ -37,7 +38,11 @@ function App({ signOut, user }: WithAuthenticatorProps) {
                 console.log('wrong data received')
             }
         } catch (e) {
-            console.log('GET call failed: ', JSON.parse(e.message));
+            if (e instanceof Error) {
+                console.log('GET call failed: ', e.message);
+            } else {
+                console.log('GET call failed with unknown error');
+            }
         }
     }
 

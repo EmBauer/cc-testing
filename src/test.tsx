@@ -12,10 +12,12 @@ Amplify.configure(config);
 function App({ signOut, user }: WithAuthenticatorProps) {
     const [counter, setCounter] = useState(0);
 
+    console.log(user)
+    console.log(typeof user)
+
     interface CounterResponse {
         counter: number;
     }
-
 
     async function incrementCounter() {
         try {
@@ -48,7 +50,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
 
     return (
         <>
-            <h1>Hello {"username" in user ? user.username : "Mister! (Missing Username)"}</h1>
+            <h1>Hello {user?.username}</h1>
             <button onClick={signOut}>Sign out</button>
 
             <div>

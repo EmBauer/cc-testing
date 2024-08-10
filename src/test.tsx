@@ -22,12 +22,13 @@ function App({ signOut, user }) {
                 }
             });
             const response = await restOperation.response;
-            const {counter: fetchedCount} = await response.body.json();
+            const data = await response.body.json();
+            const fetchedCount = data.counter
 
             setCounter(fetchedCount)
             console.log('GET call succeeded: ', response);
         } catch (e) {
-            console.log('GET call failed: ', JSON.parse(e.response.body.json()));
+            console.log('GET call failed: ', JSON.parse(e));
         }
     }
 

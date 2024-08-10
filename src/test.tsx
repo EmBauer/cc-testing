@@ -7,8 +7,14 @@ import config from './amplifyconfiguration.json';
 
 Amplify.configure(config);
 
+
+
 function App({ signOut, user }) {
     const [counter, setCounter] = useState(0); // Initialize counter state
+
+    interface CounterResponse {
+        counter: number;
+    }
 
     async function incrementCounter() {
         try {
@@ -22,11 +28,14 @@ function App({ signOut, user }) {
                 }
             });
             const response = await restOperation.response;
-            const data = await response.body.json();
-            const fetchedCount = data.counter
-
-            setCounter(fetchedCount)
-            console.log('GET call succeeded: ', response);
+            const data = await response.body.json() as CounterResponse | null;
+            if (data) {
+                const fetchedCount: number = data.counter;
+                setCounter(fetchedCount);
+                console.log('GET call succeeded: ', fetchedCount);
+            } else {
+                console.log('wrong data received')
+            }
         } catch (e) {
             console.log('GET call failed: ', JSON.parse(e));
         }
